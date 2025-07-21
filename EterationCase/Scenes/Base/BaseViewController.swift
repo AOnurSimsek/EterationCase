@@ -13,7 +13,7 @@ class BaseViewController: UIViewController {
         let view = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0,
                                                          width: 40, height: 40))
         view.style = UIActivityIndicatorView.Style.large
-        view.color = .tmdbLightGreen
+        view.color = .baseGray
         view.center = CGPoint(x: UIScreen.main.bounds.width / 2,
                               y: UIScreen.main.bounds.height / 2)
         view.layer.zPosition = 10
@@ -22,16 +22,11 @@ class BaseViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-//        setupNavigationBar()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-//    private func setupNavigationBar() {
-//        navigationController?.setNavigationBarBackBarButtonItem(image: .arrowLeft)
-//    }
     
     func showProgressHUD() {
         if !isShown {

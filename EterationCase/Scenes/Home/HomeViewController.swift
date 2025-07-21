@@ -54,24 +54,15 @@ extension HomeViewController: UICollectionViewDelegate,
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         return 0
-//        return displayData.getRowCount()
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return UICollectionViewCell()
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.reuseIdentifier, for: indexPath) as! MovieCollectionViewCell
-//        cell.populate(with: displayData.getData(at: indexPath.row),
-//                      delegate: self)
-//        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-//        guard let id = displayData.getData(at: indexPath.row).id
-//        else { return }
-//        
-//        router.routeToDetail(id: id)
     }
     
 }
