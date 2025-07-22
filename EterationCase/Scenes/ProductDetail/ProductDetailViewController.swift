@@ -220,7 +220,7 @@ final class ProductDetailViewController: BaseViewController {
         favoriteButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
         favoriteButton.topAnchor.constraint(equalTo: productImageView.topAnchor, constant: 10).isActive = true
         favoriteButton.trailingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: -10).isActive = true
-        productImageView.bringSubviewToFront(favoriteButton)
+        scrollContentView.bringSubviewToFront(favoriteButton)
         
         productTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         scrollContentView.addSubview(productTitleLabel)
@@ -266,13 +266,12 @@ final class ProductDetailViewController: BaseViewController {
     }
     
     @objc func didpressFavoriteButton() {
-        viewModel.didPressAddtoFavorite()
-        favoriteButton.respondtoTap(responseType: .getBigger)
+        viewModel.didPressFavorite()
     }
     
     @objc func didPressAddtoCartButton() {
         viewModel.didPressAddtoCart()
-        addtoCartButton.respondtoTap(responseType: .getSmaller)
+        addtoCartButton.respondtoTap()
     }
     
     @objc func didPressBackButton() {

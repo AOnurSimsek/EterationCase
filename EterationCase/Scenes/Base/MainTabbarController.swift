@@ -29,7 +29,10 @@ final class MainTabbarController: UITabBarController {
     
     private func setTabItems() {
         let productService: ProductService = ProductServiceImp()
-        let homeViewModel: HomeViewModelImpl = .init(service: productService)
+        let coreDataService: CoreDataManager = CoreDataManager.shared
+        
+        let homeViewModel: HomeViewModelImpl = .init(service: productService,
+                                                     coreDataService: coreDataService)
         let homeController: HomeViewController = .init(viewModel: homeViewModel)
         homeViewModel.setView(homeController)
         let homeNavigationController: UINavigationController = .init(rootViewController: homeController)
@@ -50,8 +53,10 @@ final class MainTabbarController: UITabBarController {
         cartNavigationController.tabBarItem.imageInsets = .init(top: 0, left: 0,
                                                                 bottom: -10, right: 0)
         
-        let favoritesViewModel: FavoritesViewModel = FavoritesViewModelImpl()
+        let favoritesViewModel: FavoritesViewModelImpl = FavoritesViewModelImpl(service: productService,
+                                                                                coreDataService: coreDataService)
         let favoritesViewController: FavoritesViewController = .init(viewModel: favoritesViewModel)
+        favoritesViewModel.setView(favoritesViewController)
         let favoritesNavigationController: UINavigationController = .init(rootViewController: favoritesViewController)
         favoritesNavigationController.tabBarItem = .init(title: nil,
                                                          image: .iconStarOutline,

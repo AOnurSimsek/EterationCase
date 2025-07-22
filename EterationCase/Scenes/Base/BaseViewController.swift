@@ -55,6 +55,16 @@ class BaseViewController: UIViewController {
         view.addGestureRecognizer(tap)
     }
     
+    func showSimpleAlert(with message: String) {
+        let alertContoller = UIAlertController(title: "Error",
+                                               message: message,
+                                               preferredStyle: .alert)
+        alertContoller.addAction(UIAlertAction(title: "Ok",
+                                               style: .default,
+                                               handler: nil))
+        present(alertContoller, animated: true)
+    }
+    
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }

@@ -7,26 +7,11 @@
 
 import UIKit
 
-enum ButtonScaleResponseType {
-    case getBigger
-    case getSmaller
-    
-    var scaleFactor: CGFloat {
-        switch self {
-        case .getBigger:
-            return 1.4
-        case .getSmaller:
-            return 0.8
-        }
-    }
-    
-}
-
 extension UIButton {
-    func respondtoTap(responseType: ButtonScaleResponseType) {
+    func respondtoTap() {
         UIView.animate(withDuration: 0.2, animations: {
-            self.transform = CGAffineTransform(scaleX: responseType.scaleFactor,
-                                               y: responseType.scaleFactor)
+            self.transform = CGAffineTransform(scaleX: 0.8,
+                                               y: 0.8)
         }) { _ in
             UIView.animate(withDuration: 0.2) {
                 self.transform = .identity

@@ -10,6 +10,7 @@ import UIKit
 protocol HomeViewModelDelegate: AnyObject {
     func loadingStatus(isLoading: Bool)
     func reloadData()
+    func showAlert(with message: String)
 }
 
 final class HomeViewController:  BaseViewController {
@@ -124,6 +125,7 @@ final class HomeViewController:  BaseViewController {
     override func loadView() {
         super.loadView()
         setLayout()
+        setUI()
     }
     
     override func viewDidLoad() {
@@ -189,7 +191,9 @@ final class HomeViewController:  BaseViewController {
     }
     
     private func routetoProductDetail(for productId: Int) {
-        let productDetailViewModel: ProductDetailViewModelImpl = .init(data: viewModel.getCellData(for: productId))
+        let service: CoreDataService = CoreDataManager.shared
+        let productDetailViewModel: ProductDetailViewModelImpl = .init(data: viewModel.getCellData(for: productId),
+                                                                       coreDataService: service)
         let productDetailController: ProductDetailViewController = .init(viewModel: productDetailViewModel)
         productDetailViewModel.setView(productDetailController)
         navigationController?.pushViewController(productDetailController, animated: true)
@@ -245,7 +249,7 @@ extension HomeViewController: ProductCollectionViewCellDelegate {
     }
     
     func didPressAddtoFavorite(for id: Int) {
-        viewModel.didPressAddtoCart(for: id)
+        viewModel.didPressFavorite(for: id)
     }
     
 }
@@ -268,6 +272,10 @@ extension HomeViewController: HomeViewModelDelegate {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
+    }
+    
+    func showAlert(with message: String) {
+        showSimpleAlert(with: message)
     }
     
 }

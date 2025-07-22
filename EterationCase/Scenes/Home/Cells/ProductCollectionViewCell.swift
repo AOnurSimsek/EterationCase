@@ -124,7 +124,9 @@ final class ProductCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         productImageView.image = nil
-        delegate = nil
+        itemId = nil
+        favoriteButton.setImage(nil, for: .normal)
+        addToCartButton.transform = .identity
     }
         
     private func setUI() {
@@ -153,7 +155,7 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         else { return }
         
         delegate?.didPressAddtoCart(for: id)
-        addToCartButton.respondtoTap(responseType: .getSmaller)
+        addToCartButton.respondtoTap()
     }
     
     @objc func didpressFavoriteButton() {
@@ -161,7 +163,6 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         else { return }
         
         delegate?.didPressAddtoFavorite(for: id)
-        favoriteButton.respondtoTap(responseType: .getBigger)
     }
     
 }
