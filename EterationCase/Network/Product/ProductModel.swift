@@ -14,6 +14,7 @@ struct ProductModel: Decodable {
     let model: String?
     let brand: String?
     let id: Int?
+    var isFavorite: Bool = false
     
     enum CodingKeys: CodingKey {
         case createdAt

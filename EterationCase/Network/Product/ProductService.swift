@@ -11,7 +11,7 @@ protocol ProductService: AnyObject {
     func getAllProducts(completion: @escaping (Result<[ProductModel], APIError>) -> Void)
 }
 
-final class ProductAPI: ProductService {
+final class ProductServiceImp: ProductService {
     private let service = APIService.shared
 
     func getAllProducts(completion: @escaping (Result<[ProductModel], APIError>) -> Void) {

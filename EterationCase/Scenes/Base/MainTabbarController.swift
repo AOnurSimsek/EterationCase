@@ -28,12 +28,15 @@ final class MainTabbarController: UITabBarController {
     }
     
     private func setTabItems() {
-        let homeViewModel: HomeViewModel = HomeViewModelImpl()
+        let productService: ProductService = ProductServiceImp()
+        let homeViewModel: HomeViewModelImpl = .init(service: productService)
         let homeController: HomeViewController = .init(viewModel: homeViewModel)
+        homeViewModel.setView(homeController)
         let homeNavigationController: UINavigationController = .init(rootViewController: homeController)
         homeNavigationController.tabBarItem = .init(title: nil,
                                                     image: .iconHomeOutline,
                                                     selectedImage: .iconHomeOutline)
+        homeNavigationController.setNavigationBarHidden(true, animated: false)
         homeNavigationController.tabBarItem.imageInsets = .init(top: 0, left: 0,
                                                                 bottom: -10, right: 0)
         
@@ -43,6 +46,7 @@ final class MainTabbarController: UITabBarController {
         cartNavigationController.tabBarItem = .init(title: nil,
                                                     image: .iconBasketOutline,
                                                     selectedImage: .iconBasketOutline)
+        cartNavigationController.setNavigationBarHidden(true, animated: false)
         cartNavigationController.tabBarItem.imageInsets = .init(top: 0, left: 0,
                                                                 bottom: -10, right: 0)
         
@@ -52,6 +56,7 @@ final class MainTabbarController: UITabBarController {
         favoritesNavigationController.tabBarItem = .init(title: nil,
                                                          image: .iconStarOutline,
                                                          selectedImage: .iconStarOutline)
+        favoritesNavigationController.setNavigationBarHidden(true, animated: false)
         favoritesNavigationController.tabBarItem.imageInsets = .init(top: 0, left: 0,
                                                                      bottom: -10, right: 0)
         

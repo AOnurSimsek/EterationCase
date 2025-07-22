@@ -10,7 +10,7 @@ import UIKit.UIImageView
 extension UIImageView {
     func setImage(path: String?) {
         image = nil
-        ImageDownloadManager.shared.loadImage(path: path) { [weak self] image  in
+        ImageDownloadManager.shared.loadImage(path: path) { [weak self] image in
             guard let self = self
             else { return }
             

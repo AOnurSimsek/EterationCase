@@ -10,12 +10,11 @@ import UIKit
 final class ImageDownloadManager {
     static let shared = ImageDownloadManager()
     private let cache = NSCache<NSString, AnyObject>()
-    private let urlBase: String = "https://image.tmdb.org/t/p/w500"
     
     func loadImage(path: String?,
                    completion: @escaping (UIImage) -> Void) {
         guard let imagePath = path,
-              let url = URL(string: urlBase + imagePath)
+              let url = URL(string: imagePath)
         else { return }
         
         if let cachedImage = cache.object(forKey: imagePath as NSString) as? UIImage {
