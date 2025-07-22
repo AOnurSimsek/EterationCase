@@ -98,7 +98,7 @@ final class HomeViewModelImpl: HomeViewModel {
     }
     
     func didPressAddtoCart(for id: Int) {
-        coreDataService.saveCartProduct(id: id)
+        coreDataService.addCartProduct(id: id)
     }
     
     func didPressFavorite(for id: Int) {

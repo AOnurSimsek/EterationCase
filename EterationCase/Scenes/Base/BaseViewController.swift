@@ -62,7 +62,11 @@ class BaseViewController: UIViewController {
         alertContoller.addAction(UIAlertAction(title: "Ok",
                                                style: .default,
                                                handler: nil))
-        present(alertContoller, animated: true)
+        DispatchQueue.main.async {
+            self.present(alertContoller, animated: true)
+
+        }
+        
     }
     
     @objc func dismissKeyboard() {

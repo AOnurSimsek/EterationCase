@@ -58,8 +58,6 @@ final class ProductCollectionViewCell: UICollectionViewCell {
                                           size: 16)
         button.tintColor = .backgroundWhite
         button.backgroundColor = .baseBlue
-        button.addTarget(self, action: #selector(didPressAddToCart),
-                         for: .touchUpInside)
         return button
     }()
     
@@ -69,8 +67,6 @@ final class ProductCollectionViewCell: UICollectionViewCell {
                         for: .normal)
         button.tintColor = .clear
         button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(didpressFavoriteButton),
-                         for: .touchUpInside)
         return button
     }()
     
@@ -115,6 +111,7 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setUI()
         setLayout()
+        addTargets()
     }
     
     required init?(coder: NSCoder) {
@@ -139,9 +136,17 @@ final class ProductCollectionViewCell: UICollectionViewCell {
         contentView.layer.shadowOpacity = 0.1
     }
     
+    private func addTargets() {
+        favoriteButton.addTarget(self, action: #selector(didpressFavoriteButton),
+                                 for: .touchUpInside)
+        addToCartButton.addTarget(self, action: #selector(didPressAddToCart),
+                                  for: .touchUpInside)
+    }
+    
     func populate(with data: ProductModel,
                   delegate: ProductCollectionViewCellDelegate) {
         self.delegate = delegate
+
         itemId = data.id
         productImageView.setImage(path: data.image)
         priceLabel.text = (data.price ?? 0).getPrice()

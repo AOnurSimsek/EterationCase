@@ -43,8 +43,10 @@ final class MainTabbarController: UITabBarController {
         homeNavigationController.tabBarItem.imageInsets = .init(top: 0, left: 0,
                                                                 bottom: -10, right: 0)
         
-        let cartViewModel: CartViewModel = CartViewModelImpl()
+        let cartViewModel: CartViewModelImpl = CartViewModelImpl(coreDataService: coreDataService,
+                                                             productService: productService)
         let cartController: CartViewController = .init(viewModel: cartViewModel)
+        cartViewModel.setView(cartController)
         let cartNavigationController: UINavigationController = .init(rootViewController: cartController)
         cartNavigationController.tabBarItem = .init(title: nil,
                                                     image: .iconBasketOutline,

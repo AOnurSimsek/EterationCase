@@ -17,8 +17,9 @@ protocol CoreDataService: AnyObject {
     func saveFavoriteProduct(id: Int)
     func getFavoriteProducts() -> [Int]
     func deleteFavoriteItem(id: Int)
-    func saveCartProduct(id: Int)
-    func getCartProducts() -> [NSManagedObject]
+    func addCartProduct(id: Int)
+    func getCartProducts() -> [CartModel]
+    func removeCartProduct(id: Int)
     func deleteCartProduct(id: Int)
 }
 
@@ -145,7 +146,7 @@ final class CoreDataManager: CoreDataService {
     }
     
     // MARK: - Product
-    func saveCartProduct(id: Int) {
+    func addCartProduct(id: Int) {
         if let existingItem = getCartProduct(id: id) {
             let quantity = existingItem.value(forKey: CoreDataConstanst.productQuantity) as? Int
             
@@ -161,10 +162,33 @@ final class CoreDataManager: CoreDataService {
         saveContext(saveType: .cart)
     }
     
-    func getCartProducts() -> [NSManagedObject] {
+    func removeCartProduct(id: Int) {
+        guard let existingItem = getCartProduct(id: id)
+        else { return }
+        
+        let quantity = existingItem.value(forKey: CoreDataConstanst.productQuantity) as? Int
+        switch quantity {
+        case 0:
+            return
+        case 1:
+            deleteCartProduct(id: id)
+        default:
+            existingItem.setValue((quantity ?? -1) - 1, forKey: CoreDataConstanst.productQuantity)
+            saveContext(saveType: .cart)
+        }
+        
+    }
+    
+    func getCartProducts() -> [CartModel] {
         let request = NSFetchRequest<NSManagedObject>(entityName: CoreDataConstanst.cartEntityName)
         do {
-            return try context.fetch(request)
+            let objects = try context.fetch(request)
+            return objects.compactMap { product in
+                let productId = product.value(forKey: CoreDataConstanst.productId) as? Int
+                let quantity = product.value(forKey: CoreDataConstanst.productQuantity) as? Int
+                return CartModel(id: productId ?? -2,
+                                 quantity: quantity ?? -2)
+            }
         } catch {
             print("Error fetching cart Products: " + error.localizedDescription)
             return []

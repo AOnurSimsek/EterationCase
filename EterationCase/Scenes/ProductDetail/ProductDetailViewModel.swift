@@ -57,7 +57,7 @@ final class ProductDetailViewModelImpl: ProductDetailViewModel {
         guard let id = data.id
         else { return }
         
-        coreDataService.saveCartProduct(id: id)
+        coreDataService.addCartProduct(id: id)
     }
     
     func didPressFavorite() {
