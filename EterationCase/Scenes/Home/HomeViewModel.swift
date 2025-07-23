@@ -83,13 +83,13 @@ final class HomeViewModelImpl: HomeViewModel {
                 let ids = coreDataService.getFavoriteProducts()
                 let idSet = Set(ids)
                 
-                productData = products.map { product in
+                self.productData = products.map { product in
                     var newProduct = product
                     newProduct.isFavorite = idSet.contains(product.id ?? -2)
                     return newProduct
                 }
             case .failure(let error):
-                view?.showAlert(with: error.description)
+                self.view?.showAlert(with: error.description)
             }
             
             self.view?.loadingStatus(isLoading: false)

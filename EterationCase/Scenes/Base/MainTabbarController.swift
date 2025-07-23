@@ -63,7 +63,7 @@ final class MainTabbarController: UITabBarController {
                                                                 bottom: -10, right: 0)
         
         let cartViewModel: CartViewModelImpl = CartViewModelImpl(coreDataService: coreDataService,
-                                                             productService: productService)
+                                                                 productService: productService)
         let cartController: CartViewController = .init(viewModel: cartViewModel)
         cartViewModel.setView(cartController)
         let cartNavigationController: UINavigationController = .init(rootViewController: cartController)

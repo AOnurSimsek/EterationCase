@@ -1,0 +1,32 @@
+[
+  {
+    "createdAt": "2023-07-17T05:39:20.849Z",
+    "name": "Cadillac Cruze",
+    "image": "https://loremflickr.com/640/480/technics",
+    "price": "631.00",
+    "description": "Illo tenetur dicta dolore necessitatibus similique reiciendis iure recusandae. Optio dicta repellendus at. Cum quisquam atque iste porro rem sed ratione quidem. Soluta tenetur beatae.\nDebitis exercitationem accusantium harum quod consectetur error officia. Animi accusantium nulla quae eum facere velit. Nostrum aliquam harum iusto officia. Provident nulla quasi voluptatem ratione similique aspernatur iste suscipit.\nMolestiae quae pariatur praesentium excepturi sequi. Id aspernatur autem labore reprehenderit a minus velit. Vero nesciunt accusamus repellat culpa. Laboriosam natus laudantium alias amet ipsam consectetur non. Quis quasi rem esse facere pariatur distinctio expedita libero.",
+    "model": "Wrangler",
+    "brand": "Audi",
+    "id": "27"
+  },
+  {
+    "createdAt": "2023-07-16T08:04:53.586Z",
+    "name": "Cadillac 2",
+    "image": "https://loremflickr.com/640/480/abstract",
+    "price": "157.00",
+    "description": "Laborum assumenda quibusdam dolorem impedit reprehenderit accusantium sint modi iure. Fugiat dolores hic amet optio cupiditate. Repellendus totam tenetur dicta ipsum commodi inventore iusto qui nisi. Fuga nam quis.\nVoluptate suscipit vero molestiae occaecati natus. Harum labore voluptatum minus. Incidunt minima minima temporibus et quis. Ex architecto itaque ducimus molestiae iure nisi. Beatae quisquam temporibus alias optio dignissimos repellat vero. Iste eligendi cupiditate facere totam.\nImpedit tempora itaque provident aspernatur. Optio porro reiciendis dolore voluptates a voluptatum occaecati maxime. Vel veritatis officiis. Dignissimos distinctio minus voluptatem rerum expedita veritatis.",
+    "model": "Wrangler",
+    "brand": "Cadillac",
+    "id": "28",
+  },
+  {
+    "createdAt": "2023-07-16T22:20:10.351Z",
+    "name": "Chrysler Mercielago",
+    "image": "https://loremflickr.com/640/480/business",
+    "price": "241.00",
+    "description": "Quaerat veritatis doloribus nostrum veritatis debitis aperiam reprehenderit saepe architecto. Libero rerum repellat porro. Illo neque ullam nemo modi distinctio cum.\nSequi ipsa iste ex tempora. Sint facere sint tenetur dolorem architecto architecto ab necessitatibus voluptates. Animi sit temporibus.\nTempore ex aut itaque accusantium dicta. Laboriosam ipsum neque porro laborum et officiis. Quis ipsam quisquam iure molestiae in neque nulla. Dolor at ut eum omnis.",
+    "model": "Wrangler",
+    "brand": "BMW",
+    "id": "66"
+  }
+]

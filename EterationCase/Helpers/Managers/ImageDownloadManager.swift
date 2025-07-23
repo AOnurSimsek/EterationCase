@@ -36,6 +36,14 @@ final class ImageDownloadManager {
                     completion(image)
                 }
                 
+            } else {
+                guard let image: UIImage = .init(systemName: "photo")?.withTintColor(.baseGray)
+                else { return }
+                
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+                
             }
             
         }.resume()
