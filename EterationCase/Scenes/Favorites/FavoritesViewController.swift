@@ -57,6 +57,8 @@ final class FavoritesViewController: BaseViewController {
         return collectionView
     }()
     
+    private lazy var emptyView: EmptyView = .init(type: .favorite)
+    
     private let viewModel: FavoritesViewModel
     
     init(viewModel: FavoritesViewModel) {
@@ -81,6 +83,8 @@ final class FavoritesViewController: BaseViewController {
     
     private func setUI() {
         view.backgroundColor = .backgroundWhite
+        emptyView.isHidden = true
+        collectionView.isHidden = true
     }
     
     private func setLayout() {
@@ -110,6 +114,13 @@ final class FavoritesViewController: BaseViewController {
         collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emptyView)
+        emptyView.topAnchor.constraint(equalTo: collectionView.topAnchor).isActive = true
+        emptyView.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor).isActive = true
+        emptyView.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor).isActive = true
+        emptyView.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor).isActive = true
     }
     
     private func routetoProductDetail(for productId: Int) {
@@ -119,6 +130,11 @@ final class FavoritesViewController: BaseViewController {
         let productDetailController: ProductDetailViewController = .init(viewModel: productDetailViewModel)
         productDetailViewModel.setView(productDetailController)
         navigationController?.pushViewController(productDetailController, animated: true)
+    }
+    
+    private func setEmptyView(isEmpty: Bool) {
+        emptyView.isHidden = !isEmpty
+        collectionView.isHidden = isEmpty
     }
     
 }
@@ -182,7 +198,10 @@ extension FavoritesViewController: FavoriteViewModelDelegate {
     }
     
     func reloadData() {
+        let isEmpty = (viewModel.getRowCont() == 0)
+
         DispatchQueue.main.async {
+            self.setEmptyView(isEmpty: isEmpty)
             self.collectionView.reloadData()
         }
     }

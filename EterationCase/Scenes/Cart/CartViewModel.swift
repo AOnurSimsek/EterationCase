@@ -66,6 +66,11 @@ final class CartViewModelImpl: CartViewModel {
             switch result {
             case .success(let products):
                 let cartItems = coreDataService.getCartProducts()
+                guard !cartItems.isEmpty
+                else {
+                    self.cartData.removeAll()
+                    break
+                }
                 
                 self.cartData = cartItems.compactMap { cartProduct in
                     guard let baseProduct = products.first(where: { $0.id == cartProduct.id })
@@ -79,7 +84,8 @@ final class CartViewModelImpl: CartViewModel {
                 
                 self.cartData.sort { $0.id > $1.id }
             case .failure(let error):
-                view?.showAlert(with: error.description)
+                view?.showAlert(with: error.description,
+                                title: "Error")
             }
             
             self.view?.loadingStatus(isLoading: false)
@@ -119,7 +125,9 @@ final class CartViewModelImpl: CartViewModel {
     }
     
     func completeShopping() {
-        
+        coreDataService.deleteAllCartProducts()
+        view?.showAlert(with: "Thank you for shopping. Hope to see you soon!",
+                        title: "E-Market")
     }
     
 }

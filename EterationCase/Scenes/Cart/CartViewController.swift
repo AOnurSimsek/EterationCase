@@ -10,7 +10,8 @@ import UIKit
 protocol CarViewModelDelegate: AnyObject {
     func loadingStatus(isLoading: Bool)
     func reloadData()
-    func showAlert(with message: String)
+    func showAlert(with message: String,
+                   title: String)
 }
 
 final class CartViewController: BaseViewController {
@@ -95,6 +96,8 @@ final class CartViewController: BaseViewController {
         return button
     }()
     
+    private lazy var emptyView: EmptyView = .init(type: .cart)
+    
     private let viewModel: CartViewModel
     
     init(viewModel: CartViewModel) {
@@ -119,6 +122,9 @@ final class CartViewController: BaseViewController {
     
     private func setUI() {
         view.backgroundColor = .backgroundWhite
+        emptyView.isHidden = true
+        tableView.isHidden = true
+        totalContainerView.isHidden = true
     }
     
     private func setLayout() {
@@ -176,6 +182,13 @@ final class CartViewController: BaseViewController {
         totalStackView.centerYAnchor.constraint(equalTo: completeButton.centerYAnchor).isActive = true
         view.bringSubviewToFront(totalStackView)
         totalStackView.topAnchor.constraint(equalTo: totalContainerView.topAnchor, constant: 16).isActive = true
+        
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emptyView)
+        emptyView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+        emptyView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
+        emptyView.leadingAnchor.constraint(equalTo: tableView.leadingAnchor).isActive = true
+        emptyView.trailingAnchor.constraint(equalTo: tableView.trailingAnchor).isActive = true
     }
     
     @objc func didPressCompleteButton() {
@@ -183,22 +196,13 @@ final class CartViewController: BaseViewController {
     }
     
     private func showCompleteAlert() {
-        let alertContoller = UIAlertController(title: "E-Market",
-                                               message: "Do you want to complete your order?",
-                                               preferredStyle: .alert)
-        alertContoller.addAction(UIAlertAction(title: "Cancel",
-                                               style: .default,
-                                               handler: nil))
-        alertContoller.addAction(UIAlertAction(title: "Complete",
-                                               style: .default,
-                                               handler: { [weak self] _ in
-            guard let self = self
-            else { return }
-            
-            self.viewModel.completeShopping()
-        }))
-        
-        present(alertContoller, animated: true)
+        viewModel.completeShopping()
+    }
+    
+    private func setEmptyView(isEmpty: Bool) {
+        self.emptyView.isHidden = !isEmpty
+        self.tableView.isHidden = isEmpty
+        self.totalContainerView.isHidden = isEmpty
     }
     
 }
@@ -267,15 +271,20 @@ extension CartViewController: CarViewModelDelegate {
     }
     
     func reloadData() {
+        let isEmpty = (viewModel.getRowCont() == 0)
+        
         DispatchQueue.main.async {
+            self.setEmptyView(isEmpty: isEmpty)
             self.tableView.reloadData()
             self.totalPriceLabel.text = self.viewModel.getTotalPrice().getPrice()
         }
         
     }
     
-    func showAlert(with message: String) {
-        showSimpleAlert(with: message)
+    func showAlert(with message: String,
+                   title: String) {
+        showSimpleAlert(with: message,
+                        title: title)
     }
     
 }

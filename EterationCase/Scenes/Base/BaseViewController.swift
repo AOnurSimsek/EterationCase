@@ -55,8 +55,8 @@ class BaseViewController: UIViewController {
         view.addGestureRecognizer(tap)
     }
     
-    func showSimpleAlert(with message: String) {
-        let alertContoller = UIAlertController(title: "Error",
+    func showSimpleAlert(with message: String, title: String = "Error") {
+        let alertContoller = UIAlertController(title: title,
                                                message: message,
                                                preferredStyle: .alert)
         alertContoller.addAction(UIAlertAction(title: "Ok",

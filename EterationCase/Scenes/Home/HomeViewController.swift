@@ -187,7 +187,14 @@ final class HomeViewController:  BaseViewController {
     }
     
     @objc func didPressSelectFilter() {
-        
+        let viewModel: FilterViewModelImp = .init(productData: viewModel.getAllproductData(),
+                                                  selectedFilters: viewModel.getSelectedFilters(),
+                                                  delegate: self)
+        let viewController: FilterViewController = .init(viewModel: viewModel)
+        viewModel.setView(viewController)
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true)
     }
     
     private func routetoProductDetail(for productId: Int) {
@@ -257,7 +264,17 @@ extension HomeViewController: ProductCollectionViewCellDelegate {
 // MARK: - TextField
 extension HomeViewController: UITextFieldDelegate {
     @objc func textFieldDidChange() {
+        guard let text = searchTextField.text
+        else { return }
         
+        viewModel.searchTextAdded(text: text)
+    }
+    
+}
+
+extension HomeViewController: FilterDelegate {
+    func didPressedApply(selectedFilters: [FilterModel]) {
+        viewModel.didSelectFilter(selections: selectedFilters)
     }
     
 }
@@ -265,7 +282,10 @@ extension HomeViewController: UITextFieldDelegate {
 // MARK: - VM Delegates
 extension HomeViewController: HomeViewModelDelegate {
     func loadingStatus(isLoading: Bool) {
-        isLoading ? showProgressHUD() : hideProgressHUD()
+        DispatchQueue.main.async {
+            isLoading ? self.showProgressHUD() : self.hideProgressHUD()
+        }
+        
     }
     
     func reloadData() {

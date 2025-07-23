@@ -12,6 +12,25 @@ final class MainTabbarController: UITabBarController {
         super.loadView()
         setTabbarUI()
         setTabItems()
+        addNotificationObservers()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        reloadCartBadge()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func addNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(cartChanged),
+                                               name: .cartChange, object: nil)
+    }
+
+    @objc private func cartChanged() {
+        reloadCartBadge()
     }
     
     private func setTabbarUI() {
@@ -79,4 +98,24 @@ final class MainTabbarController: UITabBarController {
                            favoritesNavigationController,
                            profileViewController]
     }
+    
+    private func reloadCartBadge() {
+        guard let tabBarItems = tabBar.items,
+              tabBarItems.count > 1
+        else { return }
+        
+        let cartProducts = CoreDataManager.shared.getCartProducts()
+        let count = cartProducts.reduce(0) { $0 + $1.quantity }
+        
+        let cartTabBarItem = tabBarItems[1]
+        
+        if count > 0 {
+            cartTabBarItem.badgeColor = .red
+            cartTabBarItem.badgeValue = String(count)
+        } else {
+            cartTabBarItem.badgeValue = nil
+        }
+        
+    }
+    
 }

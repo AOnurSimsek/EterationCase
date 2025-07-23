@@ -21,6 +21,7 @@ protocol CoreDataService: AnyObject {
     func getCartProducts() -> [CartModel]
     func removeCartProduct(id: Int)
     func deleteCartProduct(id: Int)
+    func deleteAllCartProducts() 
 }
 
 final class CoreDataManager: CoreDataService {
@@ -215,6 +216,19 @@ final class CoreDataManager: CoreDataService {
         if let item = getCartProduct(id: id) {
             context.delete(item)
             saveContext(saveType: .cart)
+        }
+        
+    }
+    
+    func deleteAllCartProducts() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: CoreDataConstanst.cartEntityName)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(deleteRequest)
+            NotificationCenter.default.post(name: .cartChange, object: nil)
+        } catch {
+            print("Error deleting cart item: " + error.localizedDescription)
         }
         
     }
